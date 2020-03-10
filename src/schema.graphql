@@ -32,7 +32,7 @@
 		id: ID!
 		authorname:String!
 		email: String
-		password: String!
+		password: String
 		# institution:String!
 		# designField:String!
 		age: Int!

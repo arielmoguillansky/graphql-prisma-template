@@ -25,6 +25,18 @@ const Author = {
 				return null
 			}
 		}
+	},
+	password: {
+		fragment: "fragment authorId on Author {id}",
+		resolve(parent, args, { request }, info) {
+			const authorId = getUserId(request, false) // false, because auth is not required here
+
+			if (authorId && authorId === parent.id) {
+				return parent.password
+			} else {
+				return null
+			}
+		}
 	}
 }
 export { Author as default }
