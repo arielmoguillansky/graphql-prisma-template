@@ -18,7 +18,7 @@ const Mutation = {
 
 		if (!isMatch) throw new Error('Invalid password')
 
-		return { author, token: jwt.sign({ authorId: author.id }, 'secrettoken', { expiresIn: '1 day' }) }
+		return { author, token: jwt.sign({ authorId: author.id }, process.env.JWT_SECRET, { expiresIn: '1 day' }) }
 	},
 
 	async	createAuthor(parent, args, { prisma }, info) {
@@ -35,7 +35,7 @@ const Mutation = {
 			}
 		})
 
-		return { author, token: jwt.sign({ authorId: author.id }, 'secrettoken', { expiresIn: '1 day' }) }
+		return { author, token: jwt.sign({ authorId: author.id }, process.env.JWT_SECRET, { expiresIn: '1 day' }) }
 
 	},
 	async createProduct(parent, args, { prisma, request }, info) {
