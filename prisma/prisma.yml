@@ -1,0 +1,4 @@
+#endpoint: ${env:PRISMA_ENDPOINT}
+endpoint: https://kemba-blog-app-7ea5554a30.herokuapp.com/kemba-blog-app/prod
+datamodel: datamodel.prisma
+secret: ariel

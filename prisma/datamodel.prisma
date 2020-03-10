@@ -1,0 +1,31 @@
+type Author {
+  id: ID! @id
+  authorname: String!
+  email: String! @unique
+  password:String!
+  age: Int!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  products:[Product!]! @relation(name:"ProductToAuthor", onDelete:CASCADE)
+  comments:[Comment!]! @relation(name:"CommentToAuthor", onDelete:CASCADE)
+}
+
+type Product {
+  id:ID! @id
+  productname: String!
+  desc: String!
+  published: Boolean!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  author:Author! @relation(name:"ProductToAuthor", onDelete:SET_NULL)
+  comments:[Comment!]! @relation(name:"CommentToProduct", onDelete:CASCADE)
+}
+
+type Comment{
+  id:ID! @id
+  body:String!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  author:Author! @relation(name:"CommentToAuthor", onDelete:SET_NULL)
+  product:Product! @relation(name:"CommentToProduct", onDelete:SET_NULL)
+}

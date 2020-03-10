@@ -1,0 +1,4 @@
+Modificar o agregar fields en datamodel.prisma:
+Modificar o agregar
+Luego correr prisma deploy
+Luego correr npm run get-schema

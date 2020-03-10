@@ -1,0 +1,107 @@
+	# import ProductOrderByInput, CommentOrderByInput  from './generated/prisma.graphql'
+	
+	type Query {
+		author: Author!
+		product(productId:ID!): Product!
+		authors(query:String):[Author!]!
+		products(query:String, first:Int, skip:Int, after:String, orderBy: ProductOrderByInput):[Product!]!
+		comments(first:Int, skip:Int, after:String, orderBy:CommentOrderByInput):[Comment!]!
+		allProducts(query:String, first:Int, skip:Int, after:String, orderBy:ProductOrderByInput):[Product!]!
+	}
+
+	type Mutation {
+		loginAuthor(email:String!, password:String!):AuthPayload!
+		createAuthor(authorname:String!, email:String!, password:String!, age:Int!):AuthPayload!
+		createProduct(productname:String!, published: Boolean!, desc:String!):Product!
+		createComment(body:String!, productId:ID!):Comment!
+		deleteAuthor:Author!
+		deleteProduct(id:ID!):Product!
+		deleteComment(id:ID!):Comment!
+		updateAuthor(data:UpdateAuhtorInput):Author!
+		updateProduct(id:ID!, data:UpdateProductInput): Product!
+		updateComment(id:ID!, data:UpdateCommentInput): Comment!
+	}
+
+	type Subscription {
+		comment(productId:ID!):CommentSubsPayload!
+		product:ProductSubsPayload!
+		authorProduct:ProductSubsPayload!
+	}
+
+	type Author {
+		id: ID!
+		authorname:String!
+		email: String
+		password: String!
+		# institution:String!
+		# designField:String!
+		age: Int!
+		createdAt:String!
+		updatedAt:String!
+		products:[Product!]!
+		comments:[Comment!]!
+	}
+
+	type AuthPayload{
+		token:String!
+		author:Author!
+	}
+
+	input UpdateAuhtorInput {
+		authorname:String
+		email: String
+		age:Int
+		password:String
+	}
+
+	type Product {
+		id: ID!
+		productname:String!
+		# mainImg: String
+		# images:[String!]
+		# releaseYear: Int!
+		desc: String!
+		published: Boolean!
+		createdAt:String!
+		updatedAt:String!
+		author:Author!
+		comments:[Comment!]!
+	}
+
+	input UpdateProductInput {
+		productname:String
+		# mainImg: String
+		# images:[String!]
+		desc: String
+		releaseYear: Int
+		published: Boolean
+	}
+
+	type Comment {
+		id:ID!
+		body:String!
+		createdAt:String!
+		updatedAt:String!
+		author:Author!
+		product:Product!
+	}
+
+	input UpdateCommentInput{
+		body:String!
+	}
+
+	enum MutationType{
+		CREATED
+		UPDATED
+		DELETED
+	}
+
+	type ProductSubsPayload{
+		mutation:MutationType!
+		node:Product
+	}
+
+	type CommentSubsPayload{
+		mutation:MutationType!
+		node:Comment
+	}
